@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 """
-    usage:
-        python3 algorithms
+usage:
+    python3 algorithms
 """
 
 # METADATA VARIABLES
@@ -15,11 +15,14 @@ import sys
 from queue import Queue
 import networkx as nx
 
+
 # FUNCTIONS
 def kahn(network):
     # Creating starting lists and queue
     sorted = []
-    node_watch = [] # To watch whether node is in the queue yet (messy solution, not sure how to check the queue itself atm)
+    node_watch = (
+        []
+    )  # To watch whether node is in the queue yet (messy solution, not sure how to check the queue itself atm)
     queue = Queue()
 
     # Put all nodes with incoming degree of 0 into the queue and node watch
@@ -35,8 +38,8 @@ def kahn(network):
         # Node should have no incoming edges, therefore add it to the new sorted list
         sorted.append(curr_node[0])
         # Remove it from the network
-        network.remove_node(curr_node[0])  
-        
+        network.remove_node(curr_node[0])
+
         # Check after node removal whether there are any nodes not already in the queue which now have in degree of 0
         for node in network.in_degree:
             if node[1] == 0 and node[0] not in node_watch:
@@ -45,18 +48,19 @@ def kahn(network):
 
     return sorted
 
+
 def bfs(network, root):
     # Create intial queue and lists
     queue = Queue()
     root_node = [node for node in network.nodes if node == root][0]
     queue.put(root_node)
-    
+
     # Logging the search order
     search_order = [root_node]
-    
+
     # Node watch to track which nodes are already queued for search
     node_watch = [root_node]
-    
+
     # While there is work to do
     while not queue.empty():
         curr_node = queue.get()
@@ -72,10 +76,12 @@ def bfs(network, root):
 
     return search_order
 
+
 # MAIN
 def main(args):
     """Main function"""
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
